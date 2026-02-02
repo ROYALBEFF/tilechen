@@ -52,3 +52,9 @@ ignore = ["ANN202"]
 [tool.ruff.format]
 quote-style = "double"
 indent-style = "space"
+
+[tool.pytest]
+minversion = "9.0"
+testpaths = [
+    "tests"
+]
