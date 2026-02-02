@@ -16,7 +16,9 @@ class Tile:
         self.pixels = pixels
 
     @staticmethod
-    def _2bpp(bit_array: bitarray) -> npt.NDArray:
+    def _2bpp(bit_array: bitarray) -> npt.NDArray[np.uint8]:
+        if len(bit_array) == 0:
+            raise ValueError("Cannot apply 2-bits-per-pixel decoding to an empty bit array!")
         if len(bit_array) % 2 != 0:
             raise ValueError("Cannot apply 2-bits-per-pixel decoding to bit array of uneven length!")
 
