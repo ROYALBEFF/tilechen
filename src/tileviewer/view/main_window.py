@@ -4,6 +4,7 @@ from PySide6 import QtCore, QtGui, QtWidgets
 
 from tileviewer.constants import COLOR_CHANNELS, SCALED_IMG_WIDTH
 from tileviewer.model.tilemap import TileMap
+from tileviewer.widgets.minimap import Minimap
 
 
 class MainWindow(QtWidgets.QWidget):
@@ -17,12 +18,18 @@ class MainWindow(QtWidgets.QWidget):
         self.rom_file_dialog.setFileMode(QtWidgets.QFileDialog.FileMode.ExistingFile)
 
         self.tilemap_scroll_area = QtWidgets.QScrollArea()
-        self.tilemap_scroll_area.setWidgetResizable(False)
+        self.tilemap_scroll_area.setWidgetResizable(True)
         self.tilemap_image = QtWidgets.QLabel()
 
-        self.box_layout = QtWidgets.QVBoxLayout(self)
-        self.box_layout.addWidget(self.tilemap_scroll_area)
-        self.box_layout.addWidget(self.select_rom_button)
+        self.vertical_layout = QtWidgets.QVBoxLayout(self)
+        self.horizontal_layout = QtWidgets.QHBoxLayout(self)
+
+        self.vertical_layout.addWidget(self.select_rom_button)
+        self.vertical_layout.addLayout(self.horizontal_layout)
+
+        self.horizontal_layout.addWidget(self.tilemap_scroll_area)
+        self.minimap = Minimap(self.tilemap_scroll_area)
+        self.horizontal_layout.addWidget(self.minimap)
 
         self.select_rom_button.clicked.connect(self.rom_file_dialog.open)
         self.rom_file_dialog.accepted.connect(self.read_rom_file)
@@ -54,3 +61,5 @@ class MainWindow(QtWidgets.QWidget):
         self.tilemap_image.setAlignment(QtCore.Qt.AlignmentFlag.AlignTop | QtCore.Qt.AlignmentFlag.AlignHCenter)
 
         self.tilemap_scroll_area.setWidget(self.tilemap_image)
+
+        self.minimap.set_preview(pixmap)
