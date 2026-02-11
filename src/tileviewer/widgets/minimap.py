@@ -47,9 +47,11 @@ class Minimap(QtWidgets.QWidget):
     def update_rubber_band_position(self, scroll_bar_position: int) -> None:
         if self.tilemap_pixmap is not None and not self._is_clicked:
             relative_scroll_bar_position = scroll_bar_position / self.tilemap_pixmap.height()
-            rubber_band_position_y = relative_scroll_bar_position * self.height()
-            rubber_band_position_y = min(rubber_band_position_y, self.height() - 0.5 * self.rubber_band_height)
-            self.move_rubber_band(int(rubber_band_position_y))
+
+            rubber_band_top_position_y = relative_scroll_bar_position * self.height()
+            rubber_band_top_position_y = min(rubber_band_top_position_y, self.height() - 0.5 * self.rubber_band_height)
+            rubber_band_center_position_y = int(rubber_band_top_position_y + 0.5 * self.rubber_band_height)
+            self.move_rubber_band(rubber_band_center_position_y)
 
     def scroll_to_selction(self) -> None:
         if self.tilemap_pixmap is not None:
