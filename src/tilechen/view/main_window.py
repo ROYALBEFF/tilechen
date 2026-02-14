@@ -2,9 +2,9 @@ from pathlib import Path
 
 from PySide6 import QtCore, QtGui, QtWidgets
 
-from tileviewer.constants import COLOR_CHANNELS, SCALED_IMG_WIDTH
-from tileviewer.model.tilemap import TileMap
-from tileviewer.widgets.minimap import Minimap
+from tilechen.constants import COLOR_CHANNELS, SCALED_IMG_WIDTH
+from tilechen.model.tilemap import TileMap
+from tilechen.widgets.minimap import Minimap
 
 
 class MainWindow(QtWidgets.QWidget):

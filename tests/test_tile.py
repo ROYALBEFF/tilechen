@@ -4,7 +4,7 @@ import pytest
 from bitarray import bitarray
 from bitarray.util import int2ba
 
-from tileviewer.model.tile import Tile
+from tilechen.model.tile import Tile
 
 
 @pytest.mark.parametrize("bit_array, expected_result", [

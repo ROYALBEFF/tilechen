@@ -4,7 +4,7 @@ import numpy as np
 import numpy.typing as npt
 from bitarray import bitarray
 
-from tileviewer.constants import (
+from tilechen.constants import (
     BITS_PER_TILE,
     BYTES_PER_TILE,
     COLOR_CHANNELS,
@@ -12,8 +12,8 @@ from tileviewer.constants import (
     TILE_PIXEL_SIZE,
     TILES_PER_ROW,
 )
-from tileviewer.exceptions import MaxROMSizeExceededError
-from tileviewer.model.tile import Tile
+from tilechen.exceptions import MaxROMSizeExceededError
+from tilechen.model.tile import Tile
 
 
 class TileMap:

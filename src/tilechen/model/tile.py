@@ -2,8 +2,8 @@ import numpy as np
 import numpy.typing as npt
 from bitarray import bitarray
 
-from tileviewer.constants import BITS_PER_TILE, BYTES_PER_TILE, COLORMAP, TILE_PIXEL_SIZE
-from tileviewer.exceptions import TileShapeMismatchError
+from tilechen.constants import BITS_PER_TILE, BYTES_PER_TILE, COLORMAP, TILE_PIXEL_SIZE
+from tilechen.exceptions import TileShapeMismatchError
 
 
 class Tile:
