@@ -37,6 +37,8 @@ class MainWindow(QtWidgets.QWidget):
     @QtCore.Slot()
     def read_rom_file(self) -> None:
         selected_files = self.rom_file_dialog.selectedFiles()
+        assert len(selected_files) == 1
+
         selected_file = Path(selected_files[0])
         tilemap = TileMap.read_rom(selected_file)
 
@@ -62,4 +64,4 @@ class MainWindow(QtWidgets.QWidget):
 
         self.tilemap_scroll_area.setWidget(self.tilemap_image)
 
-        self.minimap.set_preview(pixmap)
+        self.minimap.set_minimap_image(pixmap)

@@ -5,13 +5,13 @@ class Minimap(QtWidgets.QWidget):
     def __init__(self, scroll_area: QtWidgets.QScrollArea) -> None:
         super().__init__()
         self.scroll_area = scroll_area
+        self.scroll_area.verticalScrollBar().valueChanged.connect(self.update_rubber_band_position)
 
-        self.image_preview = QtWidgets.QLabel()
+        self.minimap_image = QtWidgets.QLabel()
         self.tilemap_pixmap = None
         self.scaled_tilemap_pixmap = None
 
         self.rubber_band = QtWidgets.QRubberBand(QtWidgets.QRubberBand.Shape.Rectangle, self)
-
         self.rubber_band_height = 0
         self.rubber_band.setFixedHeight(self.rubber_band_height)
         self.rubber_band.setFixedWidth(140)
@@ -19,11 +19,9 @@ class Minimap(QtWidgets.QWidget):
         self.setFixedWidth(140)
         self.setMinimumHeight(200)
 
-        self.scroll_area.verticalScrollBar().valueChanged.connect(self.update_rubber_band_position)
-
         self._is_clicked = False
 
-    def set_preview(self, pixmap: QtGui.QPixmap) -> None:
+    def set_minimap_image(self, pixmap: QtGui.QPixmap) -> None:
         self.tilemap_pixmap = pixmap
         self.scaled_tilemap_pixmap = self.tilemap_pixmap.scaled(
             self.width(),
@@ -31,9 +29,8 @@ class Minimap(QtWidgets.QWidget):
             QtCore.Qt.AspectRatioMode.IgnoreAspectRatio,
             QtCore.Qt.TransformationMode.SmoothTransformation
         )
-        self.image_preview.setPixmap(self.scaled_tilemap_pixmap)
+        self.minimap_image.setPixmap(self.scaled_tilemap_pixmap)
 
-        # TODO update position of rubber band
         relative_rubber_band_height = self.scroll_area.viewport().height() / self.tilemap_pixmap.height()
         self.rubber_band_height = int(self.height() * relative_rubber_band_height)
         self.rubber_band.setFixedHeight(self.rubber_band_height)
@@ -41,8 +38,7 @@ class Minimap(QtWidgets.QWidget):
 
     def paintEvent(self, event: QtGui.QPaintEvent) -> None:  # noqa: ARG002, N802
         if self.scaled_tilemap_pixmap is not None:
-            painter = QtGui.QPainter(self)
-            painter.drawPixmap(0, 0, self.scaled_tilemap_pixmap)
+            QtGui.QPainter(self).drawPixmap(0, 0, self.scaled_tilemap_pixmap)
 
     def update_rubber_band_position(self, scroll_bar_position: int) -> None:
         if self.tilemap_pixmap is not None and not self._is_clicked:
@@ -80,4 +76,4 @@ class Minimap(QtWidgets.QWidget):
 
     def resizeEvent(self, event: QtGui.QResizeEvent) -> None:  # noqa: ARG002, N802
         if self.tilemap_pixmap is not None:
-            self.set_preview(self.tilemap_pixmap)
+            self.set_minimap_image(self.tilemap_pixmap)
