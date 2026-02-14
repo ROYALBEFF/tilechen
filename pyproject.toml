@@ -16,6 +16,9 @@ dev = [
     "ruff>=0.14.14",
 ]
 
+[project.scripts]
+tilechen = "tilechen.app:run"
+
 [tool.ruff]
 line-length = 120
 indent-width = 4
