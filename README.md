@@ -11,6 +11,11 @@ Tilechen is a tile viewer and editor for GameBoy, GameBoy Color and GameBoy Adva
 | GameBoy Advance | ❌   | ❌    |
 
 ## Installation
+Install as `uv` tool:
+```
+uv tool install tilechen
+```
+
 Install from PyPi:
 ```
 pip install tilechen
