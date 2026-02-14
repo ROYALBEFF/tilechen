@@ -2,7 +2,7 @@ import sys
 
 from PySide6 import QtWidgets
 
-from tileviewer.view.main_window import MainWindow
+from tilechen.view.main_window import MainWindow
 
 
 def run() -> None:
