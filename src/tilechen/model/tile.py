@@ -2,8 +2,9 @@ import numpy as np
 import numpy.typing as npt
 from bitarray import bitarray
 
-from tilechen.constants import BITS_PER_TILE, BYTES_PER_TILE, COLORMAP, TILE_PIXEL_SIZE
+from tilechen.constants import BITS_PER_TILE, BYTES_PER_TILE, TILE_PIXEL_SIZE
 from tilechen.exceptions import TileShapeMismatchError
+from tilechen.palettes import DEFAULT_PALETTE, ColorPalette
 
 
 class Tile:
@@ -45,5 +46,5 @@ class Tile:
 
         return Tile(pixels)
 
-    def to_rgb(self) -> npt.NDArray[np.uint8]:
-        return COLORMAP[self.pixels]
+    def to_rgb(self, color_palette: ColorPalette = DEFAULT_PALETTE) -> npt.NDArray[np.uint8]:
+        return color_palette[self.pixels]

@@ -14,6 +14,7 @@ from tilechen.constants import (
 )
 from tilechen.exceptions import MaxROMSizeExceededError
 from tilechen.model.tile import Tile
+from tilechen.palettes import DEFAULT_PALETTE, ColorPalette
 
 
 class TileMap:
@@ -41,8 +42,8 @@ class TileMap:
 
         return TileMap(tiles)
 
-    def to_rgb(self) -> npt.NDArray[np.uint8]:
-        rgb_tiles = [tile.to_rgb() for tile in self.tiles]
+    def to_rgb(self, color_palette: ColorPalette = DEFAULT_PALETTE) -> npt.NDArray[np.uint8]:
+        rgb_tiles = [tile.to_rgb(color_palette) for tile in self.tiles]
 
         img_height = (len(rgb_tiles) // TILES_PER_ROW) * TILE_PIXEL_SIZE
         img_width = TILE_PIXEL_SIZE * TILES_PER_ROW
