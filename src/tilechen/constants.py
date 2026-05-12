@@ -1,5 +1,3 @@
-import numpy as np
-
 BYTES_PER_TILE = 16
 BITS_PER_TILE = BYTES_PER_TILE * 8
 TILE_PIXEL_SIZE = 8

@@ -4,8 +4,9 @@ from PySide6 import QtCore, QtGui, QtWidgets
 
 from tilechen.constants import COLOR_CHANNELS, SCALED_IMG_WIDTH
 from tilechen.model.tilemap import TileMap
-from tilechen.palettes import AVAILABLE_PALETTES
+from tilechen.palettes import DEFAULT_PALETTE, load_available_palettes
 from tilechen.widgets.minimap import Minimap
+from tilechen.widgets.palette_creator import PaletteCreator
 
 
 class MainWindow(QtWidgets.QWidget):
@@ -14,9 +15,15 @@ class MainWindow(QtWidgets.QWidget):
 
         self.select_rom_button = QtWidgets.QPushButton("Select ROM")
 
-        self.color_palette = tuple(AVAILABLE_PALETTES.values())[0]
+        self.color_palettes = load_available_palettes()
+        self.selected_color_palette = DEFAULT_PALETTE
+
         self.palette_selection_dropdown = QtWidgets.QComboBox()
-        self.palette_selection_dropdown.addItems(tuple(AVAILABLE_PALETTES.keys()))
+        self.palette_selection_dropdown.addItems(tuple(self.color_palettes.keys()))
+
+        self.add_color_palette_button = QtWidgets.QPushButton("+")
+
+        self.palette_creator = PaletteCreator()
 
         self.rom_file_dialog = QtWidgets.QFileDialog()
         self.rom_file_dialog.setNameFilter("*.gb")
@@ -28,18 +35,23 @@ class MainWindow(QtWidgets.QWidget):
         self.tilemap = None
 
         self.vertical_layout = QtWidgets.QVBoxLayout(self)
+        self.button_group = QtWidgets.QHBoxLayout(self)
         self.horizontal_layout = QtWidgets.QHBoxLayout(self)
 
-        self.vertical_layout.addWidget(self.select_rom_button)
-        self.vertical_layout.addWidget(self.palette_selection_dropdown)
+        self.vertical_layout.addLayout(self.button_group)
         self.vertical_layout.addLayout(self.horizontal_layout)
 
         self.horizontal_layout.addWidget(self.tilemap_scroll_area)
         self.minimap = Minimap(self.tilemap_scroll_area)
         self.horizontal_layout.addWidget(self.minimap)
 
+        self.button_group.addWidget(self.select_rom_button)
+        self.button_group.addWidget(self.palette_selection_dropdown)
+        self.button_group.addWidget(self.add_color_palette_button)
+
         self.select_rom_button.clicked.connect(self.rom_file_dialog.open)
         self.palette_selection_dropdown.currentTextChanged.connect(self.select_palette)
+        self.add_color_palette_button.clicked.connect(self.create_palette)
         self.rom_file_dialog.accepted.connect(self.read_rom_file)
 
     @QtCore.Slot()
@@ -54,7 +66,7 @@ class MainWindow(QtWidgets.QWidget):
 
     def set_tilemap_image(self) -> None:
         assert self.tilemap is not None
-        rgb_tilemap = self.tilemap.to_rgb(self.color_palette)
+        rgb_tilemap = self.tilemap.to_rgb(self.selected_color_palette)
         img_width = rgb_tilemap.shape[1]
         img_height = rgb_tilemap.shape[0]
         bytes_per_image_row = img_width * COLOR_CHANNELS
@@ -80,6 +92,10 @@ class MainWindow(QtWidgets.QWidget):
 
     @QtCore.Slot()
     def select_palette(self, palette_key: str) -> None:
-        self.color_palette = AVAILABLE_PALETTES[palette_key]
+        self.selected_color_palette = self.color_palettes[palette_key]
         if self.tilemap is not None:
             self.set_tilemap_image()
+
+    @QtCore.Slot()
+    def create_palette(self) -> None:
+        self.palette_creator.show()
