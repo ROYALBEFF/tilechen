@@ -19,6 +19,9 @@ dev = [
 [project.scripts]
 tilechen = "tilechen.app:run"
 
+[tool.uv]
+package = true
+
 [tool.ruff]
 line-length = 120
 indent-width = 4

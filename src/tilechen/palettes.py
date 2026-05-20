@@ -8,9 +8,6 @@ from tilechen.paths import PALETTE_DATA_FILEPATH
 type ColorPalette = npt.NDArray[np.uint8]
 COLOR_PALETTE_SHAPE = (4, 3)
 
-# TODO allow custom palettes
-# TODO show palette selection as small coloured rectangles
-
 DEFAULT_PALETTE = np.array([
     [0x0f,  0x10,   0x0f],
     [0x8b,  0xac,   0x0f],
@@ -79,8 +76,8 @@ PRE_DEFINED_PALETTES = {
 }
 
 def load_available_palettes() -> dict[str, ColorPalette]:
+    # TODO add logging
     if not PALETTE_DATA_FILEPATH.exists():
-        # TODO log error message
         return PRE_DEFINED_PALETTES
 
     with PALETTE_DATA_FILEPATH.open() as f:
@@ -89,41 +86,70 @@ def load_available_palettes() -> dict[str, ColorPalette]:
     user_defined_palettes = {}
     for palette_name, colors in palettes.items():
         if palette_name in PRE_DEFINED_PALETTES:
-            # TODO log error message
             continue
 
         if palette_name in user_defined_palettes:
-            # TODO log error message
             continue
 
         try:
             colors_array = np.array(colors, dtype=np.uint8)
         except:
-            # TODO log error message
             continue
 
         if colors_array.shape != COLOR_PALETTE_SHAPE:
-            # TODO log error message
             continue
 
         user_defined_palettes[palette_name] = colors_array
 
     return PRE_DEFINED_PALETTES | user_defined_palettes
 
-def save_color_palette(palette_name: str, colors: ColorPalette) -> dict[str, ColorPalette] | None:
-    with PALETTE_DATA_FILEPATH.open("w") as f:
+def save_color_palette(
+        palette_name: str,
+        colors: ColorPalette,
+        overwrite: bool = False
+    ) -> dict[str, ColorPalette] | None:
+    # TODO add logging
+    with PALETTE_DATA_FILEPATH.open("r") as f:
         palettes = json.load(f)
 
-        # TODO allow overwrite
-        if palette_name in palettes:
-            # TODO log error message
+        # pre defined palettes cannot be overwritten
+        if palette_name in PRE_DEFINED_PALETTES:
+            return None
+
+        if palette_name in palettes and not overwrite:
             return None
 
         if colors.shape != COLOR_PALETTE_SHAPE:
-            # TODO log error message
             return None
 
-        palettes[palette_name] = colors
+        palettes[palette_name] = colors.tolist()
+
+    with PALETTE_DATA_FILEPATH.open("w") as f:
         json.dump(palettes, f)
 
-        return palettes
+    return palettes
+
+def remove_color_palette(palette_name: str) -> None:
+    with PALETTE_DATA_FILEPATH.open("r") as f:
+        palettes = json.load(f)
+        if palette_name in palettes:
+            del palettes[palette_name]
+
+    with PALETTE_DATA_FILEPATH.open("w") as f:
+        json.dump(palettes, f)
+
+    return palettes
+
+def _int_to_rgb(color: int) -> tuple[int, int, int]:
+    r = (color >> 16) & 255
+    g = (color >> 8) & 255
+    b = color & 255
+    return r, g, b
+
+def create_color_palette(black: int, light_grey: int, dark_grey: int, white: int) -> ColorPalette:
+    return np.array([
+        _int_to_rgb(black),
+        _int_to_rgb(light_grey),
+        _int_to_rgb(dark_grey),
+        _int_to_rgb(white),
+    ], dtype=np.uint8)
