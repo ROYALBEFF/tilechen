@@ -1,6 +1,6 @@
 [project]
 name = "tilechen"
-version = "0.1.0"
+version = "0.2.0"
 description = "Tilechen is a tile viewer and editor for GameBoy, GameBoy Color and GameBoy Advance ROMs."
 readme = "README.md"
 requires-python = ">=3.13"
