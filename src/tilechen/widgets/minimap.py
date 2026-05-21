@@ -35,6 +35,7 @@ class Minimap(QtWidgets.QWidget):
         self.rubber_band_height = int(self.height() * relative_rubber_band_height)
         self.rubber_band.setFixedHeight(self.rubber_band_height)
         self.rubber_band.show()
+        self.repaint()
 
     def paintEvent(self, event: QtGui.QPaintEvent) -> None:  # noqa: ARG002, N802
         if self.scaled_tilemap_pixmap is not None:
