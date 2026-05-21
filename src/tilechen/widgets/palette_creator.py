@@ -1,6 +1,6 @@
 from PySide6 import QtCore, QtGui, QtWidgets
 
-from tilechen.palettes import (
+from tilechen.model.palettes import (
     PRE_DEFINED_PALETTES,
     ColorPalette,
     create_color_palette,

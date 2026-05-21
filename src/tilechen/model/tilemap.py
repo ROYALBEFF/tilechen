@@ -13,8 +13,8 @@ from tilechen.constants import (
     TILES_PER_ROW,
 )
 from tilechen.exceptions import MaxROMSizeExceededError
+from tilechen.model.palettes import DEFAULT_PALETTE, ColorPalette
 from tilechen.model.tile import Tile
-from tilechen.palettes import DEFAULT_PALETTE, ColorPalette
 
 
 class TileMap:

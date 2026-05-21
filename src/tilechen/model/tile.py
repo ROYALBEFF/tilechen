@@ -4,7 +4,7 @@ from bitarray import bitarray
 
 from tilechen.constants import BITS_PER_TILE, BYTES_PER_TILE, TILE_PIXEL_SIZE
 from tilechen.exceptions import TileShapeMismatchError
-from tilechen.palettes import DEFAULT_PALETTE, ColorPalette
+from tilechen.model.palettes import DEFAULT_PALETTE, ColorPalette
 
 
 class Tile:
