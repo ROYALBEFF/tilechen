@@ -38,7 +38,8 @@ class PaletteCreator(QtWidgets.QColorDialog):
         self.store_color_palette = QtWidgets.QWidget()
         self.store_color_palette_layout = QtWidgets.QHBoxLayout(self.store_color_palette)
 
-        self.palette_name_text_field = QtWidgets.QLineEdit(placeholderText=selected_palette)
+        self.palette_name_text_field = QtWidgets.QLineEdit()
+        self.palette_name_text_field.setText(selected_palette)
 
         self.cancel_button = QtWidgets.QPushButton()
         self.cancel_button.setText("Cancel")
