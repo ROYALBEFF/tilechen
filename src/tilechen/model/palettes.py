@@ -7,6 +7,7 @@ from tilechen.paths import PALETTE_DATA_FILEPATH
 
 type ColorPalette = npt.NDArray[np.uint8]
 COLOR_PALETTE_SHAPE = (4, 3)
+DEFAULT_COLOR_PALETTE_NAME = "default"
 
 DEFAULT_PALETTE = np.array([
     [0x0f,  0x10,   0x0f],
