@@ -1,3 +1,8 @@
+## [0.2.0] - 2026-05-21
+
+### 🚀 Features
+
+- Users can now create, edit and delete custom color palettes
 ## [0.1.0] - 2026-02-14
 
 ### 🚀 Features
