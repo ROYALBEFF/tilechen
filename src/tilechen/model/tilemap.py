@@ -4,18 +4,13 @@ import numpy as np
 import numpy.typing as npt
 from bitarray import bitarray
 
-from tilechen.constants import (
-    BITS_PER_TILE,
-    BYTES_PER_TILE,
-    COLOR_CHANNELS,
-    MAX_ROM_SIZE,
-    TILE_PIXEL_SIZE,
-    TILES_PER_ROW,
-)
 from tilechen.exceptions import MaxROMSizeExceededError
 from tilechen.model.palettes import DEFAULT_PALETTE, ColorPalette
-from tilechen.model.tile import Tile
+from tilechen.model.tile import BITS_PER_TILE, BYTES_PER_TILE, TILE_PIXEL_SIZE, Tile
 
+TILES_PER_ROW = 32
+MAX_ROM_SIZE = 4_000_000
+COLOR_CHANNELS = 3
 
 class TileMap:
     def __init__(self, tiles: list[Tile]) -> None:

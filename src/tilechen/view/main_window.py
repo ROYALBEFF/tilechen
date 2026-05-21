@@ -2,7 +2,6 @@ from pathlib import Path
 
 from PySide6 import QtCore, QtGui, QtWidgets
 
-from tilechen.constants import COLOR_CHANNELS, SCALED_IMG_WIDTH
 from tilechen.model.palettes import (
     DEFAULT_PALETTE,
     PRE_DEFINED_PALETTES,
@@ -10,10 +9,11 @@ from tilechen.model.palettes import (
     load_available_palettes,
     remove_color_palette,
 )
-from tilechen.model.tilemap import TileMap
+from tilechen.model.tilemap import COLOR_CHANNELS, TileMap
 from tilechen.widgets.minimap import Minimap
 from tilechen.widgets.palette_creator import PaletteCreator
 
+SCALED_IMG_WIDTH = 1000
 
 class MainWindow(QtWidgets.QWidget):
     def __init__(self) -> None:
