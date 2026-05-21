@@ -7,7 +7,7 @@ Tilechen is a tile viewer and editor for GameBoy, GameBoy Color and GameBoy Adva
 | System          | View | Edit |
 |-----------------|------|------|
 | GameBoy         | ✅   | ❌    |
-| GameBoy Color   | ❌   | ❌    |
+| GameBoy Color   | ✅   | ❌    |
 | GameBoy Advance | ❌   | ❌    |
 
 ## Installation

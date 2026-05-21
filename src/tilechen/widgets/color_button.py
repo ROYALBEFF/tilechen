@@ -14,7 +14,7 @@ class ColorButton(QtWidgets.QPushButton):
         if label is not None:
             self.setText(label)
 
-    def set_color(self, color: QtGui.QColor):
+    def set_color(self, color: QtGui.QColor) -> None:
         self.color = color
         color_preview = QtGui.QPixmap(self.icon_size)
         color_preview.fill(self.color)
